@@ -42,6 +42,9 @@ struct FileList {
 // Fungsi untuk inisialisasi stack
 void initStack(Stack& stack);
 
+// Fungsi untuk menginisialisasi FileList
+void initFileList(FileList& fileList) ;
+
 // Fungsi untuk mengecek apakah stack kosong
 bool isStackEmpty(Stack& stack);
 
