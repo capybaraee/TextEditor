@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1734667432 source:d:\strukdat\texteditor\main.cpp
+	"textEditor.h"
+
+1734664363 d:\strukdat\texteditor\texteditor.h
+
+1734670230 source:d:\strukdat\texteditor\texteditor.cpp
+	"textEditor.h"
+	<cstring>
+	<iostream>
+
