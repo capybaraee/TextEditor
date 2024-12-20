@@ -106,31 +106,33 @@ void searchWord(const File& file, const char* word) {
 // Fungsi untuk menghapus baris
 void deleteLine(File& file, int position, Stack& undoStack) {
     if (file.head == nullptr) return;
-
     LineNode* current = file.head;
     int currentIndex = 0;
-
     while (current && currentIndex < position) {
         current = current->next;
         currentIndex++;
     }
-
     if (!current) {
         std::cout << "Invalid line number!" << std::endl;
         return;
     }
+    // Perbarui pointer berdasarkan posisi current node
+    if (current == file.head) {
+        file.head = current->next;
+    } else if (current->prev) {
+        current->prev->next = current->next;
+    }
 
-    if (current->prev) current->prev->next = current->next;
-    if (current->next) current->next->prev = current->prev;
-    if (current == file.head) file.head = current->next;
-    if (current == file.tail) file.tail = current->prev;
-
+    if (current == file.tail) {
+        file.tail = current->prev;
+    } else if (current->next) {
+        current->next->prev = current->prev;
+    }
+    // Simpan aksi di undo stack dan hapus node
     push(undoStack, "delete", current->text, position);
     delete current;
-
     std::cout << "Line " << position + 1 << " deleted." << std::endl;
 }
-
 
 // Fungsi untuk menampilkan teks dari file
 void displayText(const File& file) {
