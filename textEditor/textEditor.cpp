@@ -39,27 +39,45 @@ StackNode* pop(Stack& stack) {
 
 // Fungsi untuk membuat file baru
 void newFile(FileList& fileList, const char* filename) {
-    // Periksa kapasitas dan tambahkan ruang jika perlu
+    // Periksa apakah kapasitas penuh
     if (fileList.size == fileList.capacity) {
-        int newCapacity = fileList.capacity == 0 ? 1 : fileList.capacity * 2;
-        File* newFiles = new File[newCapacity];
+        int newCapacity;
 
-        for (int i = 0; i < fileList.size; i++) {
-            newFiles[i] = fileList.files[i]; // Salin file lama
+        // Tentukan kapasitas baru
+        if (fileList.capacity == 0) {
+            newCapacity = 1; // Jika kapasitas awal 0, set kapasitas menjadi 1
+        } else {
+            newCapacity = fileList.capacity * 2; // Jika tidak, gandakan kapasitas
         }
 
-        delete[] fileList.files; // Hapus array lama
+        // Buat array baru dengan kapasitas yang lebih besar
+        File* newFiles = new File[newCapacity];
+
+        // Salin data dari array lama ke array baru
+        for (int i = 0; i < fileList.size; i++) {
+            newFiles[i] = fileList.files[i];
+        }
+
+        // Hapus array lama untuk membebaskan memori
+        delete[] fileList.files;
+
+        // Ganti array lama dengan array baru
         fileList.files = newFiles;
+
+        // Perbarui kapasitas dengan nilai baru
         fileList.capacity = newCapacity;
     }
 
     // Tambahkan file baru
     File newFile;
-    strcpy(newFile.name, filename);
-    newFile.head = nullptr;
-    newFile.tail = nullptr;
+    strcpy(newFile.name, filename); // Salin nama file
+    newFile.head = nullptr; // Inisialisasi head
+    newFile.tail = nullptr; // Inisialisasi tail
 
-    fileList.files[fileList.size++] = newFile; // Tambahkan ke daftar
+    // Masukkan file baru ke daftar dan tingkatkan ukuran
+    fileList.files[fileList.size++] = newFile;
+
+    // Beri notifikasi bahwa file berhasil dibuat
     std::cout << "File " << filename << " created." << std::endl;
 }
 
