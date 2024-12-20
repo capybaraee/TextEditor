@@ -7,6 +7,7 @@ void initStack(Stack& stack) {
     stack.top = nullptr;
 }
 
+// Fungsi untuk menginisialisasi FileList 
 void initFileList(FileList& fileList) {
     fileList.files = nullptr;
     fileList.size = 0;
